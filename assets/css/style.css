@@ -1,0 +1,19 @@
+button {
+    margin: 0 auto;
+    width: 300px;
+    height: 40px;
+    display: block;
+}
+
+#start {
+    margin-top: 20%;
+}
+
+.answer {
+    background-color: rgb(179, 53, 179);
+}
+
+p {
+    margin: 0 auto;
+    width: 300px;
+}
