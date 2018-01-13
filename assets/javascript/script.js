@@ -30,10 +30,11 @@ window.onload = function() {
         this.gif = gif;
     }
 
-    var testQuestion = new questionObject("What is 1 + 2", [1, 2, 3, 4], "3", "assets/images/test.jpg")
+    var Russel = new questionObject("What player has won the most NBA titles in NBA History?", ["Michael Jordan", "Shaq", "Magic Johnson", "Bill Russel"], "Bill Russel", "assets/images/test.jpg");
+    var Kareem = new questionObject("Who has scored the most points in NBA history?", ["Michael Jordan", "Kareem Abdul Jabar", "Lebron James", "Karl Malone"], "Kareem Abdul Jabar", "assets/images/test.jpg");
 
 
-
+    var objectArray = [Russel, Kareem];
 
 
     // Creates Button
@@ -41,51 +42,47 @@ window.onload = function() {
     document.body.appendChild(startButton);
 
 
-
-
-    
-
     startButton.addEventListener("click", function() {
-        var i;
-        var intValue;
+        var strValue;
         var answerButton;
+        // need timer to decrement using SetInterval
         body.removeChild(startButton);
-        // we want the content of the object to populate dynamically created elements
-        questionText = document.createTextNode(testQuestion.question);
+        nextQuestion();
+    })
+
+    function nextQuestion() {
+        var index = 0;
+        questionText = document.createTextNode(objectArray[index].question);
         questionP.appendChild(questionText);
         div1.appendChild(questionP);
-        for(i = 0; i < testQuestion.answers.length; i++) {
-            let buttonText = document.createTextNode(testQuestion.answers[i]);
+        for(var i = 0; i < objectArray[index].answers.length; i++) {
+            let buttonText = document.createTextNode(objectArray[index].answers[i]);
             answerButton = document.createElement("button");
             answerButton.className += "answers";
-            strValue = testQuestion.answers[i].toString();
-            // need for loop to add 
-            if(testQuestion.answers[i] == testQuestion.correctAnswer) {
+            // strValue = objectArray[index].answers[i].toString();
+            if(objectArray[index].answers[i] === objectArray[index].correctAnswer) {
                 answerButton.setAttribute("id", "correctAnswer");
                 console.log(answerButton);
             }
-
-            answerButton.addEventListener("click", answerClick);
+            addEventStuff(answerButton);
+            // className = document.getElementsByClassName("answers");
+            
             answerButton.appendChild(buttonText);
             div1.appendChild(answerButton);
         }
 
-
-        function answerClick() { 
-            if(answerButton.getAttribute("id") === "correctAnswer"){    // Logic works
-                console.log(answerButton)
-                console.log("got the correct answer");
-            } else {
-                console.log(answerButton)
-                console.log("not the correct answer");
-            }
+        function addEventStuff(answerButton){ 
+            answerButton.addEventListener("click", function() {
+                if(this.getAttribute("id") === "correctAnswer"){    // Logic works
+                    console.log(this)
+                    console.log("got the correct answer");
+                } else {
+                    console.log(this)
+                    console.log("not the correct answer");
+                } 
+            });
         }
-    })
-
-
-
-    
-
+    }
 
 
 
@@ -93,9 +90,4 @@ window.onload = function() {
 
 
 }
-
-
-
-
-
 
