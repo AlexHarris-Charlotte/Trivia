@@ -1,16 +1,4 @@
-// Need a start button to activate first question when clicked
-    // Dynamically create a start button and attach a click event
-// Display the question, four answers, and timer to the DOM
-    // Dynamically display current question/answer/time text to DOM
-// Allow the user to click the answers, on hover change style of this answer
-    // Attach event handler to the answers div (child element get the handler through Event Delegation)
-// When clicked we will show the correct answer and a gif for 5-7 seconds 
-    // Dynamically create the answer and gif
-// We then show the next answer and repeat this process through all of the questions
-    // Probably need a loop or some way to cycle through answers
-// After all of the questions have been answer, we display the stats of correct, incorrect, unanswered
-// After displaying the stats for 5-7 seconds, recreate the start button and let the user rerun the game
-//
+
 
 
 window.onload = function() {
@@ -33,17 +21,14 @@ window.onload = function() {
         this.gif = gif;
     }
 
-    var Russel = new questionObject("What player has won the most NBA titles in NBA History?", ["Michael Jordan", "Shaq", "Magic Johnson", "Bill Russel"], "Bill Russel", "assets/images/test.jpg");
-    var Kareem = new questionObject("Who has scored the most points in NBA history?", ["Michael Jordan", "Kareem Abdul Jabar", "Lebron James", "Karl Malone"], "Kareem Abdul Jabar", "assets/images/test.jpg");
-    var Stock = new questionObject("Who has the most assists in NBA history?", ["Chris Paul", "Steve Nash", "John Stockton", "Magic Johnson"], "John Stockton", "assets/images/test.jpg");
-    //var Kareem = new questionObject("Who has scored the most points in NBA history?", ["Michael Jordan", "Kareem Abdul Jabar", "Lebron James", "Karl Malone"], "Kareem Abdul Jabar", "assets/images/test.jpg");
-    //var Kareem = new questionObject("Who has scored the most points in NBA history?", ["Michael Jordan", "Kareem Abdul Jabar", "Lebron James", "Karl Malone"], "Kareem Abdul Jabar", "assets/images/test.jpg");
-    //var Kareem = new questionObject("Who has scored the most points in NBA history?", ["Michael Jordan", "Kareem Abdul Jabar", "Lebron James", "Karl Malone"], "Kareem Abdul Jabar", "assets/images/test.jpg");
-    //var Kareem = new questionObject("Who has scored the most points in NBA history?", ["Michael Jordan", "Kareem Abdul Jabar", "Lebron James", "Karl Malone"], "Kareem Abdul Jabar", "assets/images/test.jpg");
-    //var Kareem = new questionObject("Who has scored the most points in NBA history?", ["Michael Jordan", "Kareem Abdul Jabar", "Lebron James", "Karl Malone"], "Kareem Abdul Jabar", "assets/images/test.jpg");
+    var Russell = new questionObject("What player has won the most NBA Titles in NBA History?", ["Michael Jordan", "Shaq", "Magic Johnson", "Bill Russell"], "Bill Russell", "assets/images/russell.gif");
+    var Kareem = new questionObject("Who has scored the most Points in NBA history?", ["Michael Jordan", "Kareem Abdul Jabbar", "Lebron James", "Karl Malone"], "Kareem Abdul Jabbar", "assets/images/kareem.gif");
+    var Stock = new questionObject("Who has the most Assists in NBA history?", ["Chris Paul", "Steve Nash", "John Stockton", "Magic Johnson"], "John Stockton", "assets/images/stock.gif");
+    var Wilt = new questionObject("Who has the most Rebounds in NBA history?", ["Hakeem Olajuwon", "Wilt Chamberlain", "Tim Duncan", "Moses Malone"], "Wilt Chamberlain", "assets/images/wilt.gif");
+    var Celtics = new questionObject("What team has the won the most NBA Titles in NBA history?", ["Los Angelas Lakers", "Chicago Bulls", "Boston Celtics", "San Antonio Spurs"], "Boston Celtics", "assets/images/celtics.gif");
+   
 
-
-    var objectArray = [Russel, Kareem];
+    var objectArray = [Russell, Kareem, Stock, Wilt, Celtics];
 
 
     startButton.appendChild(buttonText);
@@ -51,31 +36,28 @@ window.onload = function() {
 
 
     startButton.addEventListener("click", function() {
+        var index = 0
         var timeCount = 30;
         var timeCountP = document.createElement("p");
         div1.appendChild(timeCountP);
         var strValue;
         var answerButton;
         body.removeChild(startButton);
-        nextQuestion();
+        nextQuestion(index);
         // Prob make this interval into a function
-        // setInterval(function(){ 
-        //     if(timeCount > 0) {
-        //         timeCountP.textContent = timeCount;
-        //         timeCount--;
-        //     } else {
-        //         timeCount = 30;
-        //         nextQuestion();
-        //         // need to create a function that shows the gif and correct answer. this function
-        //         // needs a callback to nextquestion
-        //     }
-        // }, 1000)
+        var timeInterval = setInterval(function(){ 
+            if(timeCount > 0) {
+                timeCountP.textContent = timeCount;
+                timeCount--;
+            } else {
+                timeCount = 30;
+                nextQuestion();
+            }
+        }, 1000)
     })
-
-    function nextQuestion() {
-        var index = 0;
-        questionText = document.createTextNode(objectArray[index].question);
-        questionP.appendChild(questionText);
+    var index = 0;
+    function nextQuestion(index) {
+        questionP.textContent = objectArray[index].question;
         div2.appendChild(questionP);
         for(var i = 0; i < objectArray[index].answers.length; i++) {
             let buttonText = document.createTextNode(objectArray[index].answers[i]);
@@ -97,10 +79,12 @@ window.onload = function() {
                     // Need to increment an answer score to show player at end of game
                     response = "Correct! ";
                     questionResponse(response);
+                    clearInterval(timeInterval);
                 } else if(this.getAttribute("id") !== "correctAnswer") {
                     // Need to increment an answer score to show player at end of game
                     response = "Incorrect! ";
                     questionResponse(response);
+                    clearInterval(timeInterval);
                 } 
             });
         }
@@ -117,20 +101,19 @@ window.onload = function() {
             // index++; isnt seen by original index
             setTimeout(function(){
                 removeElements();
-                nextQuestion();
-                // make call to nextQuestion here
-            },1000 * 8)
+                index++;
+                nextQuestion(index);
+            },1000 * 5)
         } 
         function removeElements() {
-            while (div2.firstChild) { // works
+            while (div2.firstChild) { // Does work
                 div2.removeChild(div2.firstChild);
             }
         }
-        index++;
         console.log(index);
     }
 
-
+    
 
 
 
