@@ -37,14 +37,16 @@ window.onload = function() {
 
     startButton.addEventListener("click", function() {
         var index = 0
-        var timeCount = 30;
-        var timeCountP = document.createElement("p");
-        div1.appendChild(timeCountP);
         var strValue;
         var answerButton;
         body.removeChild(startButton);
-        nextQuestion(index);
-        // Prob make this interval into a function
+        nextQuestion(index);       
+    })
+    var index = 0;
+    function nextQuestion(index) {
+        var timeCount = 30;
+        var timeCountP = document.createElement("p");
+        div1.appendChild(timeCountP);
         var timeInterval = setInterval(function(){ 
             if(timeCount > 0) {
                 timeCountP.textContent = timeCount;
@@ -54,9 +56,6 @@ window.onload = function() {
                 nextQuestion();
             }
         }, 1000)
-    })
-    var index = 0;
-    function nextQuestion(index) {
         questionP.textContent = objectArray[index].question;
         div2.appendChild(questionP);
         for(var i = 0; i < objectArray[index].answers.length; i++) {
