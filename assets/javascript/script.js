@@ -9,7 +9,9 @@ window.onload = function() {
     // body.appendChild(div1);
     var containerDiv = document.getElementById("container");
     var newDiv = document.createElement("div");
-    var timeP = document.getElementById("time");
+    // var timeP = document.getElementById("time");
+    var timeP = document.createElement("p");
+    var timeDiv = document.getElementById("timeDiv");
     var questionP = document.createElement("p");
     var image = document.createElement("img");
 
@@ -48,6 +50,7 @@ window.onload = function() {
         function nextQuestion(index) {
             var timeCount = 30;
             var response;
+            timeDiv.appendChild(timeP);
             var timeInterval = setInterval(function(){ 
                 if(timeCount > 0) {
                     timeP.textContent = "Time: " + timeCount;
@@ -116,7 +119,7 @@ window.onload = function() {
                         console.log("hello");   
                         nextQuestion(index);    
                     } else {
-                        // need to remove the time count here
+                        timeP.remove();
                         scoreCard(correctAnswers, incorrectAnswers);
                     } 
                 },1000 * 5)
@@ -137,7 +140,7 @@ window.onload = function() {
                 var unansweredP = document.createElement("p");
                 unansweredP.textContent = "Questions not answered: " + unanswered;
                 containerDiv.appendChild(unansweredP);
-                setTimeout(removeElements, 1000 * 5);
+                setTimeout(removeElements, 1000 * 5.8);
                 setTimeout(start, 1000 * 6);
             }
             console.log("index: " + index);  
