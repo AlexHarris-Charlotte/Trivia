@@ -1,25 +1,44 @@
+#container {
+    margin: 5% auto 0 auto;
+    border: 1px solid black;
+    width: 500px;
+    padding: 10px 0;
+}
+
+h1 {
+    text-align: center;
+}
+
 button {
+    color: rgb(255, 255, 255);
     margin: 0 auto;
     width: 300px;
     height: 40px;
     display: block;
+    border-radius: 10px;
+    background-color: rgb(39, 117, 72);
+}
+
+button:hover {
+    background-color: rgb(56, 173, 105);
 }
 
 #start {
-    margin-top: 20%;
+    margin-top: 5%;
 }
 
-.answer {
-    background-color: rgb(179, 53, 179);
-}
 
 p {
     margin: 0 auto;
-    width: 300px;
+    width: 450px;
     text-align: center;
 }
 
 img {
     display: block;
     margin: 0 auto;
+}
+
+div p {
+    font-size: 24px;
 }

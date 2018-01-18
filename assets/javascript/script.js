@@ -5,11 +5,7 @@ window.onload = function() {
     var startButton = document.createElement("button");
     startButton.setAttribute("id", "start");
     var buttonText = document.createTextNode("Start");
-    // var div1 = document.createElement("div");
-    // body.appendChild(div1);
     var containerDiv = document.getElementById("container");
-    var newDiv = document.createElement("div");
-    // var timeP = document.getElementById("time");
     var timeP = document.createElement("p");
     var timeDiv = document.getElementById("timeDiv");
     var questionP = document.createElement("p");
@@ -32,119 +28,125 @@ window.onload = function() {
     var objectArray = [Russell, Kareem, Stock, Wilt, Celtics];
 
         (function start() {
-        startButton.appendChild(buttonText);
-        document.body.appendChild(startButton);
-        var incorrectAnswers = 0;
-        var correctAnswers = 0;
-        var unanswered = 0;
+            containerDiv.style.visibility = "hidden";
+            startButton.appendChild(buttonText);
+            document.body.appendChild(startButton);
+            var incorrectAnswers = 0;
+            var correctAnswers = 0;
+            var unanswered = 0;
 
 
-        startButton.addEventListener("click", function() {
-            var index = 0
-            var strValue;
-            var answerButton;
-            body.removeChild(startButton);
-            nextQuestion(index);
-        })
-        var index = 0;
-        function nextQuestion(index) {
-            var timeCount = 30;
-            var response;
-            timeDiv.appendChild(timeP);
-            var timeInterval = setInterval(function(){ 
-                if(timeCount > 0) {
-                    timeP.textContent = "Time: " + timeCount;
-                    timeCount--;
-                } else {
-                    timeCount = 30; 
-                    unanswered++;
-                    console.log("incorrects: " + incorrectAnswers);
-                    response = "Incorrect ";
-                    removeElements();
-                    questionResponse(response);
-                    clearInterval(timeInterval);
-                }
-            }, 1000)
-            questionP.textContent = objectArray[index].question;
-            containerDiv.appendChild(questionP);
+            startButton.addEventListener("click", function() {
+                containerDiv.style.visibility = "visible";
+                var index = 0
+                var strValue;
+                var answerButton;
+                body.removeChild(startButton);
+                nextQuestion(index);
+            })
 
-            // Creates Answer Buttons
-            for(var i = 0; i < objectArray[index].answers.length; i++) {
-                let buttonText = document.createTextNode(objectArray[index].answers[i]);
-                answerButton = document.createElement("button");
-                answerButton.className += "answers";
-                if(objectArray[index].answers[i] === objectArray[index].correctAnswer) {
-                    answerButton.setAttribute("id", "correctAnswer");
-                    console.log(answerButton);
-                }
-                answerButton.appendChild(buttonText);
-                containerDiv.appendChild(answerButton);
-                addEventStuff(answerButton);
-            }
-            
-            function addEventStuff(answerButton){ 
-                answerButton.addEventListener("click", function() {
-                    if(this.getAttribute("id") === "correctAnswer"){    
-                        // Need to increment an answer score to show player at end of game
-                        response = "Correct! ";
-                        correctAnswers++ 
-                        console.log("Corrects: " + correctAnswers);
-                        questionResponse(response);
-                        clearInterval(timeInterval);
-                    } else if(this.getAttribute("id") !== "correctAnswer") {
-                        // Need to increment an answer score to show player at end of game
-                        response = "Incorrect! ";
-                        incorrectAnswers++;
-                        console.log("incorrects: " + incorrectAnswers);
-                        questionResponse(response);
-                        clearInterval(timeInterval);
-                    } 
-                });
+            var index = 0;
 
-            }
-            
-            function questionResponse(response) {
-                var responseText = document.createElement("p");
-                removeElements();
-                image.setAttribute("src", objectArray[index].gif);
-                image.style.width = "300px";
-                image.style.height = "300px";
-                containerDiv.appendChild(image);
-                responseText.textContent = response + "The answer was " + objectArray[index].correctAnswer + "!";
-                containerDiv.appendChild(responseText);
-                setTimeout(function(){
-                    removeElements();
-                    if(index < objectArray.length - 1) { // works
-                        index++; 
-                        console.log("hello");   
-                        nextQuestion(index);    
+            function nextQuestion(index) {
+                var timeCount = 30;
+                var response;
+                containerDiv.appendChild(timeP);
+                var timeInterval = setInterval(function(){ 
+                    if(timeCount > 0) {
+                        timeP.textContent = "Time: " + timeCount;
+                        timeCount--;
                     } else {
-                        timeP.remove();
-                        scoreCard(correctAnswers, incorrectAnswers);
-                    } 
-                },1000 * 5)
-            } 
-            function removeElements() {
-                while (containerDiv.firstChild) { // Does work
-                    containerDiv.removeChild(containerDiv.firstChild);
-                }
-            }
+                        timeCount = 30; 
+                        unanswered++;
+                        console.log("incorrects: " + incorrectAnswers);
+                        response = "Incorrect ";
+                        removeElements();
+                        questionResponse(response);
+                        clearInterval(timeInterval);
+                    }
+                }, 1000)
+                questionP.textContent = objectArray[index].question;
+                containerDiv.appendChild(questionP);
 
-            function scoreCard(correctAnswers, incorrectAnswers) {
-                var correctAnswersP = document.createElement("p");
-                correctAnswersP.textContent = "Correct Answers: " + correctAnswers;
-                containerDiv.appendChild(correctAnswersP);
-                var incorrectAnswersP = document.createElement("p");
-                incorrectAnswersP.textContent = "Incorrect Answers: " + incorrectAnswers;
-                containerDiv.appendChild(incorrectAnswersP);
-                var unansweredP = document.createElement("p");
-                unansweredP.textContent = "Questions not answered: " + unanswered;
-                containerDiv.appendChild(unansweredP);
-                setTimeout(removeElements, 1000 * 5.8);
-                setTimeout(start, 1000 * 6);
+                // Creates Answer Buttons
+                for(var i = 0; i < objectArray[index].answers.length; i++) {
+                    let buttonText = document.createTextNode(objectArray[index].answers[i]);
+                    answerButton = document.createElement("button");
+                    answerButton.className += "answers";
+                    // answerButton.className += " btn";
+                    // answerButton.className += " btn-info";
+                    if(objectArray[index].answers[i] === objectArray[index].correctAnswer) {
+                        answerButton.setAttribute("id", "correctAnswer");
+                        console.log(answerButton);
+                    }
+                    answerButton.appendChild(buttonText);
+                    containerDiv.appendChild(answerButton); 
+                    addEventStuff(answerButton);
+                }
+                
+                function addEventStuff(answerButton){ 
+                    answerButton.addEventListener("click", function() {
+                        if(this.getAttribute("id") === "correctAnswer"){    
+                            response = "Correct! ";
+                            correctAnswers++ 
+                            console.log("Corrects: " + correctAnswers);
+                            questionResponse(response);
+                            clearInterval(timeInterval);
+                        } else if(this.getAttribute("id") !== "correctAnswer") {
+                            response = "Incorrect! ";
+                            incorrectAnswers++;
+                            console.log("incorrects: " + incorrectAnswers);
+                            questionResponse(response);
+                            clearInterval(timeInterval);
+                        } 
+                    });
+
+                }
+                
+                function questionResponse(response) {
+                    var responseText = document.createElement("p");
+                    removeElements();
+                    image.setAttribute("src", objectArray[index].gif);
+                    image.style.width = "300px";
+                    image.style.height = "300px";
+                    containerDiv.appendChild(image);
+                    responseText.textContent = response + objectArray[index].correctAnswer + "!";
+                    containerDiv.appendChild(responseText);
+                    setTimeout(function(){
+                        removeElements();
+                        if(index < objectArray.length - 1) { 
+                            index++; 
+                            console.log("hello");   
+                            nextQuestion(index);    
+                        } else {
+                            timeP.remove();
+                            scoreCard(correctAnswers, incorrectAnswers);
+                        } 
+                    },1000 * 5)
+                } 
+                function removeElements() {
+                    while (containerDiv.firstChild) { 
+                        containerDiv.removeChild(containerDiv.firstChild);
+                    }
+                }
+
+                function scoreCard(correctAnswers, incorrectAnswers) {
+                    var correctAnswersP = document.createElement("p");
+                    correctAnswersP.textContent = "Correct Answers: " + correctAnswers;
+                    containerDiv.appendChild(correctAnswersP);
+                    var incorrectAnswersP = document.createElement("p");
+                    incorrectAnswersP.textContent = "Incorrect Answers: " + incorrectAnswers;
+                    containerDiv.appendChild(incorrectAnswersP);
+                    var unansweredP = document.createElement("p");
+                    unansweredP.textContent = "Questions not answered: " + unanswered;
+                    containerDiv.appendChild(unansweredP);
+                    setTimeout(removeElements, 1000 * 5.8);
+                    setTimeout(start, 1000 * 6);
+                }
+                console.log("index: " + index);  
             }
-            console.log("index: " + index);  
-        }
     })();
 }
+
+
 
